@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Semantic Network</title>
+    <div th:replace="fragments/header :: header-css"></div>
+</head>
+<body>
+<div class="wrapper">
+    <div id="content">
+
+        <div class="container">
+            <div class="row m-3">
+                <div class="col">
+                    <div>
+                        <button class="btn btn-outline-secondary mt-2" data-bs-target="#uploadFileModal" data-bs-toggle="modal"
+                                type="button">Upload New File
+                        </button>
+                    </div>
+
+                    <div>
+                        <form class="row" enctype="multipart/form-data" id="file-upload-form"
+                              method="post"
+                              th:object="${inputForm}"
+                              th:action="@{/predict}">
+                            <div class="mt-3">
+                                <label class="form-label" for="firstSubject">First Subject</label>
+                                <input accept=".txt" class="form-control" id="firstSubject"
+                                       th:classappend="${#fields.hasErrors('firstSubject')} ? is-invalid"
+                                       th:field="*{firstSubject}"
+                                       type="text">
+
+                                <label class="form-label" for="firstSubject">Relation</label>
+                                <input accept=".txt" class="form-control" id="relation"
+                                       th:classappend="${#fields.hasErrors('relation')} ? is-invalid"
+                                       th:field="*{relation}"
+                                       type="text">
+
+                                <label class="form-label" for="secondSubject">Second Subject</label>
+                                <input accept=".txt" class="form-control" id="secondSubject"
+                                       th:classappend="${#fields.hasErrors('secondSubject')} ? is-invalid"
+                                       th:field="*{secondSubject}"
+                                       type="text">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div th:if="${!answerList.isEmpty()}">
+                        <table class="table table-sm table-hover">
+                            <tr th:each="answer, iter : ${answerList}">
+                                <td th:text="(${iter.index} + 1) + ' ' + ${answer}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid card m-2">
+
+            <div class="row d-flex card-body justify-content-between">
+                <div class="col-2 card" th:if="${!subjectList.isEmpty()}">
+                    Subjects
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="subject : ${subjectList}">
+                            <td th:text="${subject.subjectId}"></td>
+                            <td th:text="${subject.name}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col-3 card" th:if="${!relationList.isEmpty()}">
+                    Relations
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Relation Type</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="relation : ${relationList}">
+                            <td th:text="${relation.relationId}"></td>
+                            <td th:text="${relation.name}"></td>
+                            <td th:text="${relation.relationType}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-4 card" th:if="${!subjectsRelationList.isEmpty()}">
+                    Subjects Relations
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First Subject Name</th>
+                            <th scope="col">Relation Name</th>
+                            <th scope="col">Second Subject Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="subjectsRelation, iter : ${subjectsRelationList}">
+                            <td th:text="${iter.index} + 1"></td>
+                            <td th:text="${subjectsRelation.firstSubject.name}"></td>
+                            <td th:text="${subjectsRelation.relation.name}"></td>
+                            <td th:text="${subjectsRelation.secondSubject.name}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div th:replace="upload-file :: upload-file"></div>
+        <div th:replace="fragments/footer :: footer-js"></div>
+        <div th:replace="upload-file :: upload-file-script"></div>
+    </div>
+</div>
+</body>
+</html>
