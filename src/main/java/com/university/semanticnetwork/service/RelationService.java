@@ -25,4 +25,8 @@ public class RelationService {
     public Relation create(Relation relation) {
         return relationDao.save(relation);
     }
+
+    public void deleteAll() {
+        relationDao.deleteAll();
+    }
 }

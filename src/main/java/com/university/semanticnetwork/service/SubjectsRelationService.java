@@ -25,4 +25,8 @@ public class SubjectsRelationService {
         }
         return subjectsRelationDao.save(subjectsRelation);
     }
+
+    public void deleteAll() {
+        subjectsRelationDao.deleteAll();
+    }
 }

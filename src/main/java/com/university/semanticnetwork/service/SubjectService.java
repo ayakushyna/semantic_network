@@ -25,4 +25,8 @@ public class SubjectService {
     public Subject create(Subject subject) {
         return subjectDao.save(subject);
     }
+
+    public void deleteAll() {
+        subjectDao.deleteAll();
+    }
 }

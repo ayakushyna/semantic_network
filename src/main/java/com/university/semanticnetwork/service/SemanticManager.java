@@ -160,7 +160,7 @@ public class SemanticManager {
 
             answerList = getSecondSubjects(
                     subjectDao.findById(Long.valueOf(firstSubject)).orElse(null),
-                    relationDao.findById(Long.valueOf(firstSubject)).orElse(null))
+                    relationDao.findById(Long.valueOf(relation)).orElse(null))
                     .stream()
                     .map(Subject::toString)
                     .collect(Collectors.toList());

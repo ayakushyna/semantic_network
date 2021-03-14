@@ -25,6 +25,10 @@ public class FileService {
     private final SubjectsRelationService subjectsRelationService;
 
     public void uploadFile(MultipartFile file) {
+        subjectsRelationService.deleteAll();;
+        relationService.deleteAll();
+        subjectService.deleteAll();
+
         int step = 0;
 
         try (BufferedReader reader = new BufferedReader(
